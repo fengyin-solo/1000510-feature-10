@@ -28,6 +28,15 @@ class EntryPayload(BaseModel):
     remark: str | None = None
 
 
+class PostponePayload(BaseModel):
+    """整组顺延：选中计划、顺延天数，以及操作人与批复意见。"""
+
+    ids: list[int] = Field(default_factory=list)
+    days: int = 0
+    operator: str | None = None
+    opinion: str | None = None
+
+
 
 class SectionEntry(BaseModel):
     """线路区段明细结构。"""

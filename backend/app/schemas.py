@@ -28,6 +28,30 @@ class EntryPayload(BaseModel):
     remark: str | None = None
 
 
+class PlanActionPayload(BaseModel):
+    """检修计划状态流转入参：动作、操作人、批复意见。"""
+
+    action: str
+    operator: str | None = None
+    comment: str | None = None
+    # 兼容旧调用方把动作塞在 values 里的写法。
+    values: dict[str, Any] = Field(default_factory=dict)
+
+
+class PlanPostponePreviewPayload(BaseModel):
+    """顺延预览入参：计划 id 列表与整体后移天数。"""
+
+    plan_ids: list[int] = Field(default_factory=list)
+    days: int = 0
+
+
+class PlanPostponeApplyPayload(PlanPostponePreviewPayload):
+    """顺延确认入参：在预览基础上补批复意见与操作人。"""
+
+    comment: str | None = None
+    operator: str | None = None
+
+
 
 class SectionEntry(BaseModel):
     """线路区段明细结构。"""
